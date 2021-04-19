@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "SDL.h"
+#include "SDL_image.h"
 #include "snake.h"
 
 class Renderer {
@@ -17,11 +18,14 @@ class Renderer {
  private:
   SDL_Window* _sdlWindow;
   SDL_Renderer* _sdlRenderer;
+  SDL_Texture* _testTexture;
 
   const std::size_t kScreenWidth;
   const std::size_t kScreenHeight;
   const std::size_t kGridWidth;
   const std::size_t kGridHeight;
+
+  SDL_Texture* loadTexture(std::string path);
 };
 
 #endif

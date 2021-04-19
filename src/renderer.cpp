@@ -20,21 +20,47 @@ Renderer::Renderer(const std::size_t screen_width,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
 
-  if (nullptr == _sdlWindow) {
+  if (_sdlWindow == nullptr) {
     std::cerr << "Window could not be created.\n";
     std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
+    return;
   }
 
   // Create renderer
   _sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_ACCELERATED);
-  if (nullptr == _sdlRenderer) {
+  if (_sdlRenderer == nullptr) {
     std::cerr << "Renderer could not be created.\n";
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+    return;
+  }
+
+  // Initialize PNG loading
+  int imgFlags = IMG_INIT_PNG;
+  if (!(IMG_Init(imgFlags) & imgFlags))
+  {
+    std::cerr << "SDL_Image cout not be initialized!\n";
+    std::cerr << "SDL_Image Error: " << IMG_GetError() << "\n";
+    return;
+  }
+
+  // load test texture
+  _testTexture = loadTexture("../assets/sprites/sprPlayer_Idle_Base.png");
+  if (_testTexture == nullptr)
+  {
+    std::cerr << "Failed to load test texture\n";
   }
 }
 
 Renderer::~Renderer() {
+  SDL_DestroyTexture(_testTexture);
+  _testTexture = nullptr;
+
+  SDL_DestroyRenderer(_sdlRenderer);
+  _sdlRenderer = nullptr;
+
   SDL_DestroyWindow(_sdlWindow);
+  _sdlWindow = nullptr;
+
   SDL_Quit();
 }
 
@@ -46,6 +72,9 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   // Clear screen
   SDL_SetRenderDrawColor(_sdlRenderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(_sdlRenderer);
+
+  // Render test texture to screen
+  SDL_RenderCopy(_sdlRenderer, _testTexture, nullptr, nullptr);
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);
@@ -78,4 +107,31 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(_sdlWindow, title.c_str());
+}
+
+SDL_Texture* Renderer::loadTexture(std::string path)
+{
+  // Final texture
+  SDL_Texture* newTexture = nullptr;
+
+  // Load image from path
+  SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+  if (loadedSurface == nullptr)
+  {
+    std::cerr << "Unable to load image " << path << ". SDL_image Error: " << IMG_GetError() << "\n";
+  }
+  else
+  {
+    // create texture from surface pixels
+    newTexture = SDL_CreateTextureFromSurface(_sdlRenderer, loadedSurface);
+    if (newTexture == nullptr)
+    {
+      std::cerr << "Unable to create texture from " << path << ". SDL Error: " << SDL_GetError() << "\n";
+    }
+
+    // clear up surface from loaded image
+    SDL_FreeSurface(loadedSurface);
+  }
+
+  return newTexture;
 }
