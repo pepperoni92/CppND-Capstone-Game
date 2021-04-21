@@ -67,8 +67,11 @@ Renderer::Renderer(const std::size_t screen_width,
 }
 
 Renderer::~Renderer() {
-  // _testTexture->Destroy();
-  // _testTexture = nullptr;
+  _testTexture->Destroy();
+  _testTexture = nullptr;
+
+  _testSpritesheet->Destroy();
+  _testSpritesheet = nullptr;
 
   SDL_DestroyRenderer(_sdlRenderer);
   _sdlRenderer = nullptr;
