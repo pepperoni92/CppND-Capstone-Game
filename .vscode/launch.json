@@ -4,26 +4,47 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        // This configuration should work, but there seems to be a bug in gdb that is having issues with Mac OS
+        // ../../gdb/thread.c:95: internal-error: struct thread_info *inferior_thread(): Assertion `current_thread_ != nullptr' failed.\nA problem internal to GDB has been detected,\nfurther debugging may prove unreliable."
+        // https://www.cygwin.com/bugzilla/show_bug.cgi?id=26761
+        // 
+        // {
+        //     "name": "g++ - Build and debug active file",
+        //     "type": "cppdbg",
+        //     "request": "launch",
+        //     "program": "${workspaceFolder}/build/SDL2Test",
+        //     "args": [],
+        //     "stopAtEntry": true,
+        //     "cwd": "${workspaceFolder}/build",
+        //     "environment": [],
+        //     "externalConsole": false,
+        //     "MIMode": "gdb",
+        //     "setupCommands": [
+        //         {
+        //             "description": "Enable pretty-printing for gdb",
+        //             "text": "-enable-pretty-printing",
+        //             "ignoreFailures": true
+        //         }
+        //     ],
+        //     "preLaunchTask": "C/C++: g++ build active file",
+        //     "miDebuggerPath": "/usr/local/bin/gdb",
+        //     "logging": {
+        //         "engineLogging": true
+        //     }
+        // },
+        // lldb launch profile is so that we can still build and debug on Mac VS Code
         {
-            "name": "g++ - Build and debug active file",
+            "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
+            "cwd": "${workspaceFolder}/build",
             "program": "${workspaceFolder}/build/SDL2Test",
             "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}/build",
+            "stopAtEntry": false,
             "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "C/C++: g++ build active file",
-            "miDebuggerPath": "/usr/local/bin/gdb"
+            "MIMode": "lldb",
+            "preLaunchTask": "C/C++: g++ build active file"
         }
     ]
 }
