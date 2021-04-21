@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include "game_texture.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -26,6 +27,8 @@ Renderer::Renderer(const std::size_t screen_width,
     return;
   }
 
+  std::cout << "SDL Window Created\n";
+
   // Create renderer
   _sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_ACCELERATED);
   if (_sdlRenderer == nullptr) {
@@ -33,6 +36,8 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
     return;
   }
+
+  std::cout << "SDL Renderer created\n";
 
   // Initialize PNG loading
   int imgFlags = IMG_INIT_PNG;
@@ -43,17 +48,20 @@ Renderer::Renderer(const std::size_t screen_width,
     return;
   }
 
+  std::cout << "SDL Image Create\n";
+
   // load test texture
-  _testTexture = loadTexture("../assets/sprites/sprPlayer_Idle_Base.png");
+  _testTexture->CreateFromFile("../assets/sprites/sprPlayer_Idle_Base.png", _sdlRenderer);
   if (_testTexture == nullptr)
   {
     std::cerr << "Failed to load test texture\n";
   }
+  std::cout << "Texture loaded successfully\n";
 }
 
 Renderer::~Renderer() {
-  SDL_DestroyTexture(_testTexture);
-  _testTexture = nullptr;
+  // _testTexture->Destroy();
+  // _testTexture = nullptr;
 
   SDL_DestroyRenderer(_sdlRenderer);
   _sdlRenderer = nullptr;
@@ -61,6 +69,7 @@ Renderer::~Renderer() {
   SDL_DestroyWindow(_sdlWindow);
   _sdlWindow = nullptr;
 
+  IMG_Quit();
   SDL_Quit();
 }
 
@@ -74,7 +83,7 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   SDL_RenderClear(_sdlRenderer);
 
   // Render test texture to screen
-  SDL_RenderCopy(_sdlRenderer, _testTexture, nullptr, nullptr);
+  _testTexture->Render(200, 200, _sdlRenderer);
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);
@@ -107,31 +116,4 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(_sdlWindow, title.c_str());
-}
-
-SDL_Texture* Renderer::loadTexture(std::string path)
-{
-  // Final texture
-  SDL_Texture* newTexture = nullptr;
-
-  // Load image from path
-  SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-  if (loadedSurface == nullptr)
-  {
-    std::cerr << "Unable to load image " << path << ". SDL_image Error: " << IMG_GetError() << "\n";
-  }
-  else
-  {
-    // create texture from surface pixels
-    newTexture = SDL_CreateTextureFromSurface(_sdlRenderer, loadedSurface);
-    if (newTexture == nullptr)
-    {
-      std::cerr << "Unable to create texture from " << path << ". SDL Error: " << SDL_GetError() << "\n";
-    }
-
-    // clear up surface from loaded image
-    SDL_FreeSurface(loadedSurface);
-  }
-
-  return newTexture;
 }
