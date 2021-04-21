@@ -29,8 +29,6 @@ Renderer::Renderer(const std::size_t screen_width,
     return;
   }
 
-  std::cout << "SDL Window Created\n";
-
   // Create renderer
   _sdlRenderer = SDL_CreateRenderer(_sdlWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
   if (_sdlRenderer == nullptr) {
@@ -38,8 +36,6 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
     return;
   }
-
-  std::cout << "SDL Renderer created\n";
 
   // Initialize PNG loading
   int imgFlags = IMG_INIT_PNG;
