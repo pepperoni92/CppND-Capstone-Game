@@ -17,7 +17,7 @@ public:
     int GetHeight();
     
 
-private:
+protected:
     SDL_Texture* _texture;
     int _width;
     int _height;

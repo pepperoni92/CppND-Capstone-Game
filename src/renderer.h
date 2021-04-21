@@ -7,6 +7,7 @@
 #include "snake.h"
 
 class GameTexture;
+class SpritesheetTexture;
 
 class Renderer {
  public:
@@ -19,6 +20,7 @@ class Renderer {
 
  private:
   GameTexture* _testTexture;
+  SpritesheetTexture* _testSpritesheet;
 
   const std::size_t kScreenWidth;
   const std::size_t kScreenHeight;
@@ -28,7 +30,10 @@ class Renderer {
   SDL_Window* _sdlWindow;
   SDL_Renderer* _sdlRenderer;
 
+  double _lastFrameTime;
+
   SDL_Texture* loadTexture(std::string path);
+  double UpdateLastFrameTime();
 };
 
 #endif

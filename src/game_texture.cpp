@@ -53,8 +53,8 @@ bool GameTexture::CreateFromFile(std::string path, SDL_Renderer* sdlRenderer)
     {
       std::cout << "Texture size is  " << loadedSurface->w << "x" << loadedSurface->h << "\n";
       std::cout << "Storing height and width\n";
-      _width = 32;//loadedSurface->w;
-      _height = 32;//loadedSurface->h;
+      _width = loadedSurface->w;
+      _height = loadedSurface->h;
     }
 
     std::cout << "Freing up surface\n";

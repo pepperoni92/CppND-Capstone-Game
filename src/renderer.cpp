@@ -1,7 +1,9 @@
 #include "renderer.h"
 #include <iostream>
 #include <string>
+#include <chrono>
 #include "game_texture.h"
+#include "spritesheet_texture.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -58,6 +60,10 @@ Renderer::Renderer(const std::size_t screen_width,
     std::cerr << "Failed to load test texture\n";
   }
   std::cout << "Texture loaded successfully\n";
+
+  _testSpritesheet = new SpritesheetTexture();
+  _testSpritesheet->CreateFromFile("../assets/sprites/sprPlayer_Run_Base.png", _sdlRenderer, 32);
+  _testSpritesheet->PlayAnimation(0, 4, 18.0);
 }
 
 Renderer::~Renderer() {
@@ -74,7 +80,18 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
+double Renderer::UpdateLastFrameTime()
+{
+  auto currentTime = std::chrono::steady_clock::now();
+  auto currentTimeSeconds = std::chrono::duration<double>(currentTime.time_since_epoch()).count();
+  double deltaTime =  currentTimeSeconds - _lastFrameTime;
+  _lastFrameTime = currentTimeSeconds;
+  return deltaTime;
+}
+
 void Renderer::Render(Snake const snake, SDL_Point const &food) {
+  double deltaTime = UpdateLastFrameTime();
+
   SDL_Rect block;
   block.w = kScreenWidth / kGridWidth;
   block.h = kScreenHeight / kGridHeight;
@@ -85,6 +102,9 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
 
   // Render test texture to screen
   _testTexture->Render(200, 200, _sdlRenderer);
+
+  // Render test sprites to screen
+  _testSpritesheet->Render(300, 200, _sdlRenderer, deltaTime);
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);
