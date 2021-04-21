@@ -51,6 +51,7 @@ Renderer::Renderer(const std::size_t screen_width,
   std::cout << "SDL Image Create\n";
 
   // load test texture
+  _testTexture = new GameTexture();
   _testTexture->CreateFromFile("../assets/sprites/sprPlayer_Idle_Base.png", _sdlRenderer);
   if (_testTexture == nullptr)
   {

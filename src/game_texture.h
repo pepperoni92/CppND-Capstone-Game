@@ -15,12 +15,12 @@ public:
     void Render(int x, int y, SDL_Renderer* sdlRenderer);
     int GetWidth();
     int GetHeight();
-    int _width;
-    int _height;
     
 
 private:
     SDL_Texture* _texture;
+    int _width;
+    int _height;
 };
 
 #endif
