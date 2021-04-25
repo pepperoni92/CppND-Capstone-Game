@@ -22,6 +22,9 @@ void Player::Update()
 
     if (_moveRight)
         _currentSpeed++;
+    
+    // set spritesheet to flipped if we are moving to the left
+    _spritesheet->SetFlipped(_currentSpeed < 0.0f);
 
     if (_currentSpeed != 0.0f)
     {

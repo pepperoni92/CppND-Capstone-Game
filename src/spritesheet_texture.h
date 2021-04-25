@@ -15,11 +15,13 @@ public:
     bool PlayAnimation(int startFrameIndex, int endFrameIndex, double fps = 60.0);
     void StopAnimation();
     bool IsAnimating() { return _bAnimating; }
+    void SetFlipped(bool flipped) { _bFlipped = flipped; }
 
 private:
     std::vector<SDL_Rect> _spriteClips;
     GameTexture _spriteTexture;
 
+    bool _bFlipped {false};
     bool _bAnimating;
     int _animationCurrentFrame;
     int _animationStartFrame;

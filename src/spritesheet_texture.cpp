@@ -79,7 +79,9 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
         renderQuad.h = _spriteClips[spriteIndex].h;
     }
 
-    SDL_RenderCopy(sdlRenderer, _texture, currentClip, &renderQuad);
+    SDL_RendererFlip flip = _bFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+
+    SDL_RenderCopyEx(sdlRenderer, _texture, currentClip, &renderQuad, 0.0, NULL, flip);
 }
 
 bool SpritesheetTexture::PlayAnimation(int startFrameIndex, int endFrameIndex, double fps)
