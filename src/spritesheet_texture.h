@@ -14,6 +14,7 @@ public:
     void Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime, int spriteIndex = 0);
     bool PlayAnimation(int startFrameIndex, int endFrameIndex, double fps = 60.0);
     void StopAnimation();
+    bool IsAnimating() { return _bAnimating; }
 
 private:
     std::vector<SDL_Rect> _spriteClips;

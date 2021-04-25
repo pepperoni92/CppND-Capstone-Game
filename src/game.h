@@ -19,6 +19,7 @@ public:
   int GetSize() const;
 
 private:
+  Player* _player;
   Snake _snake;
   SDL_Point _food;
 

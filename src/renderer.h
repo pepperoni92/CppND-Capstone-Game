@@ -6,6 +6,7 @@
 #include "SDL_image.h"
 #include "snake.h"
 
+class Player;
 class GameTexture;
 class SpritesheetTexture;
 
@@ -15,12 +16,12 @@ class Renderer {
            const std::size_t gridWidth, const std::size_t gridHeight);
   ~Renderer();
 
-  void Render(Snake const snake, SDL_Point const &food);
+  void LoadTextures(Player* player);
+
+  void Render(Snake const snake, SDL_Point const &food, Player* const player);
   void UpdateWindowTitle(int score, int fps);
 
  private:
-  GameTexture* _testTexture;
-  SpritesheetTexture* _testSpritesheet;
 
   const std::size_t kScreenWidth;
   const std::size_t kScreenHeight;

@@ -11,8 +11,8 @@ SpritesheetTexture::SpritesheetTexture()
     _animationEndFrame = 0;
     _currentFrameTime = 0.0;
 }
-SpritesheetTexture::~SpritesheetTexture() {}
 
+SpritesheetTexture::~SpritesheetTexture() {}
 
 bool SpritesheetTexture::CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteSize)
 {
@@ -62,7 +62,7 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
                 _animationCurrentFrame = _animationStartFrame;
             }
 
-            std::cout << "New frame! Frametime was " << _currentFrameTime << ". New frame is " << _animationCurrentFrame << "\n";
+            // std::cout << "New frame! Frametime was " << _currentFrameTime << ". New frame is " << _animationCurrentFrame << "\n";
 
             _currentFrameTime = 0.0;
         }
@@ -70,7 +70,7 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
         currentClip = &_spriteClips[_animationCurrentFrame];
         renderQuad.w = _spriteClips[_animationCurrentFrame].w;
         renderQuad.h = _spriteClips[_animationCurrentFrame].h;
-        std::cout << "Playing frame at " << currentClip->x << ", " << currentClip->y << "\n";
+        // std::cout << "Playing frame at " << currentClip->x << ", " << currentClip->y << "\n";
     }
     else
     {

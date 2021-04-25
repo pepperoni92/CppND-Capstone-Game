@@ -4,6 +4,7 @@
 #include <chrono>
 #include "game_texture.h"
 #include "spritesheet_texture.h"
+#include "player.h"
 
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
@@ -47,27 +48,9 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   std::cout << "SDL Image Create\n";
-
-  // load test texture
-  _testTexture = new GameTexture();
-  _testTexture->CreateFromFile("../assets/sprites/sprPlayer_Idle_Base.png", _sdlRenderer);
-  if (_testTexture == nullptr)
-  {
-    std::cerr << "Failed to load test texture\n";
-  }
-  std::cout << "Texture loaded successfully\n";
-
-  _testSpritesheet = new SpritesheetTexture();
-  _testSpritesheet->CreateFromFile("../assets/sprites/sprPlayer_Run_Base.png", _sdlRenderer, 32);
-  _testSpritesheet->PlayAnimation(0, 4, 18.0);
 }
 
 Renderer::~Renderer() {
-  _testTexture->Destroy();
-  _testTexture = nullptr;
-
-  _testSpritesheet->Destroy();
-  _testSpritesheet = nullptr;
 
   SDL_DestroyRenderer(_sdlRenderer);
   _sdlRenderer = nullptr;
@@ -79,6 +62,13 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
+void Renderer::LoadTextures(Player* player)
+{
+  SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
+  playerSpritesheet->CreateFromFile("../assets/sprites/sprPlayer_Base.png", _sdlRenderer, 32);
+  player->_spritesheet = std::move(playerSpritesheet);
+}
+
 double Renderer::UpdateLastFrameTime()
 {
   auto currentTime = std::chrono::steady_clock::now();
@@ -88,7 +78,7 @@ double Renderer::UpdateLastFrameTime()
   return deltaTime;
 }
 
-void Renderer::Render(Snake const snake, SDL_Point const &food) {
+void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const player) {
   double deltaTime = UpdateLastFrameTime();
 
   SDL_Rect block;
@@ -99,11 +89,8 @@ void Renderer::Render(Snake const snake, SDL_Point const &food) {
   SDL_SetRenderDrawColor(_sdlRenderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(_sdlRenderer);
 
-  // Render test texture to screen
-  _testTexture->Render(200, 200, _sdlRenderer);
-
   // Render test sprites to screen
-  _testSpritesheet->Render(300, 200, _sdlRenderer, deltaTime);
+  player->_spritesheet->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);
