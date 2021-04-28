@@ -11,15 +11,18 @@ public:
     SpritesheetTexture();
     ~SpritesheetTexture();
     bool CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteSize);
-    void Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime, int spriteIndex = 0);
+    void Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime);
     bool PlayAnimation(int startFrameIndex, int endFrameIndex, double fps = 60.0);
     void StopAnimation();
     bool IsAnimating() { return _bAnimating; }
     void SetFlipped(bool flipped) { _bFlipped = flipped; }
+    void SetFrameIndex(int frame);
 
 private:
     std::vector<SDL_Rect> _spriteClips;
     GameTexture _spriteTexture;
+
+    int _frameIndex = 0;
 
     bool _bFlipped {false};
     bool _bAnimating;

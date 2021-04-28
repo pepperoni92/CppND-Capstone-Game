@@ -40,13 +40,8 @@ bool SpritesheetTexture::CreateFromFile(std::string path, SDL_Renderer* sdlRende
     return true;
 }
 
-void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime, int spriteIndex)
+void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime)
 {
-    if (spriteIndex > _spriteClips.size())
-    {
-        std::cerr << "spriteIndex of " << spriteIndex << " is out of bounds. There are only " << _spriteClips.size() << " sprites in this sheet.\n";
-    }
-
     SDL_Rect renderQuad = { x, y, _width, _height };
     SDL_Rect* currentClip;
 
@@ -74,9 +69,9 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
     }
     else
     {
-        currentClip = &_spriteClips[spriteIndex];
-        renderQuad.w = _spriteClips[spriteIndex].w;
-        renderQuad.h = _spriteClips[spriteIndex].h;
+        currentClip = &_spriteClips[_frameIndex];
+        renderQuad.w = _spriteClips[_frameIndex].w;
+        renderQuad.h = _spriteClips[_frameIndex].h;
     }
 
     SDL_RendererFlip flip = _bFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
@@ -106,4 +101,19 @@ void SpritesheetTexture::StopAnimation()
     _animationStartFrame = 0;
     _animationEndFrame = 0;
     _bAnimating = false;
+}
+
+void SpritesheetTexture::SetFrameIndex(int frame)
+{
+    if (frame > _spriteClips.size())
+    {
+        std::cerr << "Frame Index " << frame << " is ou of bounds. Max frame index is " << _spriteClips.size() - 1 << "\n";
+        _frameIndex = 0;
+    }
+    else
+    {
+        _frameIndex = frame;
+    }
+
+
 }

@@ -65,8 +65,12 @@ Renderer::~Renderer() {
 void Renderer::LoadTextures(Player* player)
 {
   SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
-  playerSpritesheet->CreateFromFile("../assets/sprites/sprPlayer_Base.png", _sdlRenderer, 32);
-  player->_spritesheet = std::move(playerSpritesheet);
+  playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, 32);
+  player->SetSpriteheet(std::move(playerSpritesheet));
+
+  SpritesheetTexture* weaponSpritesheet = new SpritesheetTexture();
+  weaponSpritesheet->CreateFromFile(player->kWeaponTexturePath, _sdlRenderer, 32);
+  player->SetWeaponSpriteheet(std::move(weaponSpritesheet));
 }
 
 double Renderer::UpdateLastFrameTime()
@@ -89,8 +93,11 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const pl
   SDL_SetRenderDrawColor(_sdlRenderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(_sdlRenderer);
 
-  // Render test sprites to screen
-  player->_spritesheet->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+  // Render player
+  player->GetSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+
+  // Render weapon
+  player->GetWeaponSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);

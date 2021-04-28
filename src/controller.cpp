@@ -29,6 +29,7 @@ void Controller::HandleInput(bool &running, Snake &snake, Player *player) const
       case SDLK_UP:
       case SDLK_w:
         ChangeDirection(snake, Snake::Direction::kUp, Snake::Direction::kDown);
+        player->Jump();
         break;
 
       case SDLK_DOWN:
