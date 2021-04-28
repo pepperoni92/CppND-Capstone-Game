@@ -44,12 +44,14 @@ void Player::Update()
     {
         _currentSpeed--;
         _spritesheet->SetFlipped(true);
+        _weaponSpritesheet->SetFlipped(true);
     }
 
     if (_moveRight)
     {
         _currentSpeed++;
         _spritesheet->SetFlipped(false);
+        _weaponSpritesheet->SetFlipped(false);
     }
 
     if (_bJumping)
