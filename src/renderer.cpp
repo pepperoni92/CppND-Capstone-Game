@@ -64,6 +64,12 @@ Renderer::~Renderer() {
 
 void Renderer::LoadTextures(Player* player)
 {
+  _background = new GameTexture();
+  _background->CreateFromFile("../assets/sprites/background_dark.png", _sdlRenderer);
+
+  _foreground = new GameTexture();
+  _foreground->CreateFromFile("../assets/sprites/sprGround_Full.png", _sdlRenderer);
+
   SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
   playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, 32, 32);
   player->SetSpriteheet(std::move(playerSpritesheet));
@@ -96,6 +102,12 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const pl
   // Clear screen
   SDL_SetRenderDrawColor(_sdlRenderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(_sdlRenderer);
+
+  // Render background
+  _background->Render(0, 0, _sdlRenderer);
+
+  // Render ground
+  _foreground->Render(0, 416, _sdlRenderer);
 
   if (player->GetIsAttacking())
   {

@@ -31,6 +31,9 @@ class Renderer {
   SDL_Window* _sdlWindow;
   SDL_Renderer* _sdlRenderer;
 
+  GameTexture* _background;
+  GameTexture* _foreground;
+
   double _lastFrameTime;
 
   SDL_Texture* loadTexture(std::string path);
