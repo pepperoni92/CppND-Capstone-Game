@@ -15,6 +15,12 @@ Player::~Player()
         _weaponSpritesheet->Destroy();
         _weaponSpritesheet = nullptr;
     }
+
+    if (_attackSpritesheet != nullptr)
+    {
+        _attackSpritesheet->Destroy();
+        _attackSpritesheet = nullptr;
+    }
 }
 
 void Player::Jump()
@@ -25,6 +31,15 @@ void Player::Jump()
         _bJumping = true;
         _jumpSpeed = _jumpStartSpeed;
         _spritesheet->StopAnimation();
+    }
+}
+
+void Player::Attack()
+{
+    if (!_bAttacking)
+    {
+        _bAttacking = true;
+        _attackSpritesheet->PlayAnimation(0, 2, 15.0, 0);
     }
 }
 
@@ -45,6 +60,7 @@ void Player::Update()
         _currentSpeed--;
         _spritesheet->SetFlipped(true);
         _weaponSpritesheet->SetFlipped(true);
+        _attackSpritesheet->SetFlipped(true);
     }
 
     if (_moveRight)
@@ -52,6 +68,15 @@ void Player::Update()
         _currentSpeed++;
         _spritesheet->SetFlipped(false);
         _weaponSpritesheet->SetFlipped(false);
+        _attackSpritesheet->SetFlipped(false);
+    }
+
+    if (_bAttacking)
+    {
+        if (!_attackSpritesheet->IsAnimating())
+        {
+            _bAttacking = false;
+        }
     }
 
     if (_bJumping)
@@ -80,14 +105,15 @@ void Player::Update()
             _y -= _jumpSpeed;
         }
     }
-    else // Not jumping - regular run
+
+    if (!_bJumping) // Not jumping - regular run
     {
         if (_currentSpeed != 0.0f)
         {
             if (!_spritesheet->IsAnimating())
             {
                 _bRunning = true;
-                _spritesheet->PlayAnimation(kRunFrameStart, kRunFrameEnd);
+                _spritesheet->PlayAnimation(kRunFrameStart, kRunFrameEnd, 30.0);
             }
         }
         else

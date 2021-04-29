@@ -65,12 +65,16 @@ Renderer::~Renderer() {
 void Renderer::LoadTextures(Player* player)
 {
   SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
-  playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, 32);
+  playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, 32, 32);
   player->SetSpriteheet(std::move(playerSpritesheet));
 
   SpritesheetTexture* weaponSpritesheet = new SpritesheetTexture();
-  weaponSpritesheet->CreateFromFile(player->kWeaponTexturePath, _sdlRenderer, 32);
+  weaponSpritesheet->CreateFromFile(player->kWeaponTexturePath, _sdlRenderer, 32, 32);
   player->SetWeaponSpriteheet(std::move(weaponSpritesheet));
+
+  SpritesheetTexture* attackSpritesheet = new SpritesheetTexture();
+  attackSpritesheet->CreateFromFile(player->kAttackTexturePath, _sdlRenderer, 64, 32);
+  player->SetAttackpriteheet(std::move(attackSpritesheet));
 }
 
 double Renderer::UpdateLastFrameTime()
@@ -93,11 +97,18 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const pl
   SDL_SetRenderDrawColor(_sdlRenderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(_sdlRenderer);
 
-  // Render player
-  player->GetSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+  if (player->GetIsAttacking())
+  {
+    // render attacking sprite
+    player->GetAttackSpritesheet()->Render(player->GetX() - 16, player->GetY(), _sdlRenderer, deltaTime);
+  }
+  else
+  {
+    player->GetSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
 
-  // Render weapon
-  player->GetWeaponSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+    // Render weapon
+    player->GetWeaponSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+  }
 
   // Render food
   SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xCC, 0x00, 0xFF);

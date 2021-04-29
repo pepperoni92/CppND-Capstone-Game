@@ -48,6 +48,10 @@ void Controller::HandleInput(bool &running, Snake &snake, Player *player) const
         ChangeDirection(snake, Snake::Direction::kRight, Snake::Direction::kLeft);
         player->_moveRight = true;
         break;
+
+      case SDLK_SPACE:
+        player->Attack();
+        break;
       }
     }
     else if (e.type == SDL_KEYUP)

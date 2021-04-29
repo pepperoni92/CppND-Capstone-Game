@@ -27,17 +27,24 @@ public:
     int GetCurrentHealth() { return _currentHealth; }
     int GetMaxHealth() { return _maxHealth; }
 
+    bool GetIsAttacking() { return _bAttacking; }
+    void Attack();
+
     SpritesheetTexture* GetSpritesheet() { return _spritesheet; }
     void SetSpriteheet(SpritesheetTexture* spritesheet) { _spritesheet = spritesheet; }
 
     SpritesheetTexture* GetWeaponSpritesheet() { return _weaponSpritesheet; }
     void SetWeaponSpriteheet(SpritesheetTexture* spritesheet) { _weaponSpritesheet = spritesheet; }
 
+    SpritesheetTexture* GetAttackSpritesheet() { return _attackSpritesheet; }
+    void SetAttackpriteheet(SpritesheetTexture* spritesheet) { _attackSpritesheet = spritesheet; }
+
     bool _moveLeft {false};
     bool _moveRight {false};
 
     const std::string kTexturePath { "../assets/sprites/sprPlayer_Base.png" };
     const std::string kWeaponTexturePath { "../assets/sprites/sprPlayer_Sword.png" };
+    const std::string kAttackTexturePath { "../assets/sprites/sprPlayer_Attacks.png" };
     const int kIdleFrameIndex {0};
     const int kRunFrameStart {1};
     const int kRunFrameEnd {5};
@@ -59,9 +66,11 @@ private:
     bool _bAlive {true};
     bool _bRunning {false};
     bool _bJumping{false};
+    bool _bAttacking{false};
 
     SpritesheetTexture* _spritesheet;
     SpritesheetTexture* _weaponSpritesheet;
+    SpritesheetTexture* _attackSpritesheet;
 
     Weapon* _weapon;
 };

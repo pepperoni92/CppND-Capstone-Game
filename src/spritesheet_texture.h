@@ -10,13 +10,14 @@ class SpritesheetTexture : public GameTexture
 public:
     SpritesheetTexture();
     ~SpritesheetTexture();
-    bool CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteSize);
+    bool CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteWidth, int spriteHeight);
     void Render(int x, int y, SDL_Renderer* sdlRenderer, double deltaTime);
-    bool PlayAnimation(int startFrameIndex, int endFrameIndex, double fps = 60.0);
+    bool PlayAnimation(int startFrameIndex, int endFrameIndex, double fps = 60.0, int loops = -1);
     void StopAnimation();
     bool IsAnimating() { return _bAnimating; }
     void SetFlipped(bool flipped) { _bFlipped = flipped; }
     void SetFrameIndex(int frame);
+    int GetCurrentAnimationFrame() { return _animationCurrentFrame; }
 
 private:
     std::vector<SDL_Rect> _spriteClips;
@@ -29,6 +30,8 @@ private:
     int _animationCurrentFrame;
     int _animationStartFrame;
     int _animationEndFrame;
+    int _loops {-1};
+    int _loopCount {0};
     double _animationFrameLength;
     double _currentFrameTime;
 };

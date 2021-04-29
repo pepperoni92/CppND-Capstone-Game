@@ -14,25 +14,25 @@ SpritesheetTexture::SpritesheetTexture()
 
 SpritesheetTexture::~SpritesheetTexture() {}
 
-bool SpritesheetTexture::CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteSize)
+bool SpritesheetTexture::CreateFromFile(std::string path, SDL_Renderer* sdlRenderer, int spriteWidth, int spriteHeight)
 {
     if (!GameTexture::CreateFromFile(path, sdlRenderer))
     {
         return false;
     }
 
-    int spriteRows = _height / spriteSize;
-    int spriteCols = _width / spriteSize;
+    int spriteRows = _height / spriteHeight;
+    int spriteCols = _width / spriteWidth;
 
     for (int row = 0; row < spriteRows; row++)
     {
         for (int col = 0; col < spriteCols; col++)
         {
             SDL_Rect spriteRect;
-            spriteRect.w = spriteSize;
-            spriteRect.h = spriteSize;
-            spriteRect.x = col * spriteSize;
-            spriteRect.y = row * spriteSize;
+            spriteRect.w = spriteWidth;
+            spriteRect.h = spriteHeight;
+            spriteRect.x = col * spriteWidth;
+            spriteRect.y = row * spriteHeight;
             _spriteClips.push_back(spriteRect);
         }
     }
@@ -60,6 +60,19 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
             // std::cout << "New frame! Frametime was " << _currentFrameTime << ". New frame is " << _animationCurrentFrame << "\n";
 
             _currentFrameTime = 0.0;
+
+            // check for looping
+            if (_animationCurrentFrame == _animationStartFrame) // did the loop start over?
+            {
+                _loopCount++;
+
+                if (_loops > -1 && _loopCount >= _loops)  // are completed all loops?
+                {
+                    StopAnimation();
+                    _loops = 0;
+                    _loopCount = 0;
+                }
+            }
         }
 
         currentClip = &_spriteClips[_animationCurrentFrame];
@@ -79,7 +92,7 @@ void SpritesheetTexture::Render(int x, int y, SDL_Renderer* sdlRenderer, double 
     SDL_RenderCopyEx(sdlRenderer, _texture, currentClip, &renderQuad, 0.0, NULL, flip);
 }
 
-bool SpritesheetTexture::PlayAnimation(int startFrameIndex, int endFrameIndex, double fps)
+bool SpritesheetTexture::PlayAnimation(int startFrameIndex, int endFrameIndex, double fps, int loops)
 {
     if (startFrameIndex == endFrameIndex)
     {
@@ -92,6 +105,9 @@ bool SpritesheetTexture::PlayAnimation(int startFrameIndex, int endFrameIndex, d
     _animationStartFrame = startFrameIndex;
     _animationEndFrame = endFrameIndex;
     _animationFrameLength = 1/fps;
+
+    _loops = loops;
+    _loopCount = -1;
 
     return true;
 }
