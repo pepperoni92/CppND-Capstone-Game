@@ -53,7 +53,7 @@ private:
     float _currentSpeed {0.0f};
     float _speed {5.0f};
     float _x {320.0f};
-    float _y {384.0f};
+    float _y {264.0f};
 
     int _maxHealth {100};
     int _currentHealth {_maxHealth};

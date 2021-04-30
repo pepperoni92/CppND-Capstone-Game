@@ -6,11 +6,9 @@
 class ScrollingTexture : public GameTexture
 {
 public:
-    void SetSpeed(float value) { _speed = value; }
     float GetScrollingOffset() { return _scrollingOffset; };
-    void Move();
+    void Move(int playerPosition);
 private:
-    float _speed {1.0f};
     float _scrollingOffset {0.0f};
 };
 

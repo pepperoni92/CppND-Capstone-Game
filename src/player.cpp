@@ -114,15 +114,22 @@ void Player::Update()
             {
                 _bRunning = true;
                 _spritesheet->PlayAnimation(kRunFrameStart, kRunFrameEnd, 30.0);
+                _weaponSpritesheet->PlayAnimation(kRunFrameStart, kRunFrameEnd, 30.0);
             }
         }
         else
         {
             _bRunning = false;
             _spritesheet->StopAnimation();
+            _weaponSpritesheet->StopAnimation();
         }
     }
 
     _x += _currentSpeed * _speed;
+
+    if (_x <= 32) // if player is on the far left of the map, stop them from moving further left
+    {
+        _x = 32;
+    }
     //std::cout << "Player x = " << _x << "\n";
 }

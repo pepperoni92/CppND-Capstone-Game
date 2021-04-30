@@ -105,26 +105,26 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const pl
   SDL_RenderClear(_sdlRenderer);
 
   // Render background
-  _background->Move();
-  _background->Render(_background->GetScrollingOffset(), 0, _sdlRenderer);
-  _background->Render(_background->GetScrollingOffset() + _background->GetWidth(), 0, _sdlRenderer);
+  _background->Move(player->GetX());
+  _background->Render(_background->GetScrollingOffset(), -120, _sdlRenderer);
+  _background->Render(_background->GetScrollingOffset() + _background->GetWidth(), -120, _sdlRenderer);
 
   // Render ground
-  _foreground->Move();
-  _foreground->Render(_foreground->GetScrollingOffset(), 415, _sdlRenderer);
-  _foreground->Render(_foreground->GetScrollingOffset() + _foreground->GetWidth(), 415, _sdlRenderer);
+  _foreground->Move(player->GetX());
+  _foreground->Render(_foreground->GetScrollingOffset(), 296, _sdlRenderer);
+  _foreground->Render(_foreground->GetScrollingOffset() + _foreground->GetWidth(), 296, _sdlRenderer);
 
   if (player->GetIsAttacking())
   {
     // render attacking sprite
-    player->GetAttackSpritesheet()->Render(player->GetX() - 16, player->GetY(), _sdlRenderer, deltaTime);
+    player->GetAttackSpritesheet()->Render(320-16, player->GetY(), _sdlRenderer, deltaTime);
   }
   else
   {
-    player->GetSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+    player->GetSpritesheet()->Render(320, player->GetY(), _sdlRenderer, deltaTime);
 
     // Render weapon
-    player->GetWeaponSpritesheet()->Render(player->GetX(), player->GetY(), _sdlRenderer, deltaTime);
+    player->GetWeaponSpritesheet()->Render(320, player->GetY(), _sdlRenderer, deltaTime);
   }
 
   // Render food

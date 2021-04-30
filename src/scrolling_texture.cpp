@@ -1,10 +1,6 @@
 #include "scrolling_texture.h"
 
-void ScrollingTexture::Move()
+void ScrollingTexture::Move(int playerPosition)
 {
-    _scrollingOffset -= _speed;
-    if (_scrollingOffset < -_width)
-    {
-        _scrollingOffset = 0;
-    }
+    _scrollingOffset = (-playerPosition % _width);
 }
