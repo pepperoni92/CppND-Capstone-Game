@@ -39,6 +39,8 @@ public:
     SpritesheetTexture* GetAttackSpritesheet() { return _attackSpritesheet; }
     void SetAttackpriteheet(SpritesheetTexture* spritesheet) { _attackSpritesheet = spritesheet; }
 
+    bool IsAlive() { return true; }
+
     bool _moveLeft {false};
     bool _moveRight {false};
 
