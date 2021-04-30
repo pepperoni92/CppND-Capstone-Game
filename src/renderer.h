@@ -9,6 +9,7 @@
 class Player;
 class GameTexture;
 class SpritesheetTexture;
+class ScrollingTexture;
 
 class Renderer {
  public:
@@ -31,8 +32,8 @@ class Renderer {
   SDL_Window* _sdlWindow;
   SDL_Renderer* _sdlRenderer;
 
-  GameTexture* _background;
-  GameTexture* _foreground;
+  ScrollingTexture* _background;
+  ScrollingTexture* _foreground;
 
   double _lastFrameTime;
 

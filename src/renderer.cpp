@@ -4,6 +4,7 @@
 #include <chrono>
 #include "game_texture.h"
 #include "spritesheet_texture.h"
+#include "scrolling_texture.h"
 #include "player.h"
 
 Renderer::Renderer(const std::size_t screen_width,
@@ -64,10 +65,10 @@ Renderer::~Renderer() {
 
 void Renderer::LoadTextures(Player* player)
 {
-  _background = new GameTexture();
+  _background = new ScrollingTexture();
   _background->CreateFromFile("../assets/sprites/background_dark.png", _sdlRenderer);
 
-  _foreground = new GameTexture();
+  _foreground = new ScrollingTexture();
   _foreground->CreateFromFile("../assets/sprites/sprGround_Full.png", _sdlRenderer);
 
   SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
@@ -104,10 +105,14 @@ void Renderer::Render(Snake const snake, SDL_Point const &food, Player* const pl
   SDL_RenderClear(_sdlRenderer);
 
   // Render background
-  _background->Render(0, 0, _sdlRenderer);
+  _background->Move();
+  _background->Render(_background->GetScrollingOffset(), 0, _sdlRenderer);
+  _background->Render(_background->GetScrollingOffset() + _background->GetWidth(), 0, _sdlRenderer);
 
   // Render ground
-  _foreground->Render(0, 416, _sdlRenderer);
+  _foreground->Move();
+  _foreground->Render(_foreground->GetScrollingOffset(), 415, _sdlRenderer);
+  _foreground->Render(_foreground->GetScrollingOffset() + _foreground->GetWidth(), 415, _sdlRenderer);
 
   if (player->GetIsAttacking())
   {
