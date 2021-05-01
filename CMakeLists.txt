@@ -15,6 +15,6 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} src)
 
-add_executable(${PROJECT_NAME} src/main.cpp src/game.cpp src/controller.cpp src/game_texture.cpp src/spritesheet_texture.cpp src/renderer.cpp src/player.cpp src/scrolling_texture.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/game.cpp src/controller.cpp src/game_texture.cpp src/spritesheet_texture.cpp src/renderer.cpp src/player.cpp src/scrolling_texture.cpp src/Vector2d.h src/ECS/ECS.h src/ECS/Entity.h src/ECS/Component.h src/ECS/Components/Transform.h src/ECS/EntityManager.cpp)
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
