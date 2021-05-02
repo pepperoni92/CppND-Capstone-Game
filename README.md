@@ -37,7 +37,30 @@ Move forward in the level destroying as many enemies as you can without getting 
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./ActionGame`.
+4. Run it: `./ActionGame`
+
+## File Structure
+`/assets`: images and other assets loaded into the game
+`/src`: stores all source files
+
+ ## Important Classes
+ `GameTexture` was created to handle the loading and unloading of texture files for the project.
+ `SpritesheetTexture` and `ScrollingTexture` are children of `GameTexture` with added functionality for rendering and animating.
+
+ ## Rubric Criteria Met
+ | Criteria | Description |
+ | -------- | ----------- |
+ | The project demonstrates an understanding of C++ functions and control structures.| For and while loops are used in various areas, including the Game::Update() method |
+ | The project reads data from a file and process the data, or the program writes data to a file. | GameTexture::CreateFromFile() method loads images into textures in memory |
+ | The project accepts user input and processes the input. | Controller::HandleInput() handles user input from the keyboard |
+ | The project uses Object Oriented Programming techniques. | ScrollingTexture and SpritesheetTexture inherit from GameTexture |
+ | Classes use appropriate access specifiers for class members | Each class has appropriate access specifiers utilized |
+ | Class constructors utilize member initialization lists. | Game class utilizes member initialzation lists |
+ | Classes encapsulate behavior. | Player class encapsulates specific player behavior. GameTexture handles loading and storing of textures |
+ | Classes follow an appropriate inheritance hierarchy. | See GameTexture and Spritesheet Texture |
+ | Overloaded functions allow the same function to operate on different parameters. | Enemy.h line 17 and 18 display this |
+ | The project uses destructors appropriately. | Destructors are used in GameTexture, Player and Enemy classes |
+ | The project uses move semantics to move data, instead of copying it, where possible. | renderer.cpp moves ownership of the GameTexture pointers to the Player in lines 69-79 |
 
 ## CC Attribution-ShareAlike 4.0 International
 
