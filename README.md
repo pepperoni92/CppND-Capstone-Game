@@ -24,7 +24,7 @@ Move forward in the level destroying as many enemies as you can without getting 
   * Linux: make is installed by default on most Linux distros
   * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
   * Windows: [Click here for installation instructions](http://gnuwin32.sourceforge.net/packages/make.htm)
-* SDL2 and SDL2_image >= 2.0 
+* SDL2 and SDL2**image >= 2.0 
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
   >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source. 
 * gcc/g++ >= 5.4
@@ -50,17 +50,17 @@ Move forward in the level destroying as many enemies as you can without getting 
  ## Rubric Criteria Met
  | Criteria | Description |
  | -------- | ----------- |
- | The project demonstrates an understanding of C++ functions and control structures.| For and while loops are used in various areas, including the Game::Update() method |
- | The project reads data from a file and process the data, or the program writes data to a file. | GameTexture::CreateFromFile() method loads images into textures in memory |
- | The project accepts user input and processes the input. | Controller::HandleInput() handles user input from the keyboard |
- | The project uses Object Oriented Programming techniques. | ScrollingTexture and SpritesheetTexture inherit from GameTexture |
- | Classes use appropriate access specifiers for class members | Each class has appropriate access specifiers utilized |
- | Class constructors utilize member initialization lists. | Game class utilizes member initialzation lists |
- | Classes encapsulate behavior. | Player class encapsulates specific player behavior. GameTexture handles loading and storing of textures |
- | Classes follow an appropriate inheritance hierarchy. | See GameTexture and Spritesheet Texture |
- | Overloaded functions allow the same function to operate on different parameters. | Enemy.h line 17 and 18 display this |
- | The project uses destructors appropriately. | Destructors are used in GameTexture, Player and Enemy classes |
- | The project uses move semantics to move data, instead of copying it, where possible. | renderer.cpp moves ownership of the GameTexture pointers to the Player in lines 69-79 |
+ | **The project demonstrates an understanding of C++ functions and control structures.** | For and while loops are used in various areas, including the Game::Update() method |
+ | **The project reads data from a file and process the data, or the program writes data to a file.** | GameTexture::CreateFromFile() method loads images into textures in memory |
+ | **The project accepts user input and processes the input.** | Controller::HandleInput() handles user input from the keyboard |
+ | **The project uses Object Oriented Programming techniques.** | ScrollingTexture and SpritesheetTexture inherit from GameTexture |
+ | **Classes use appropriate access specifiers for class members** | Each class has appropriate access specifiers utilized |
+ | **Class constructors utilize member initialization lists.** | Game class utilizes member initialzation lists |
+ | **Classes encapsulate behavior.** | Player class encapsulates specific player behavior. GameTexture handles loading and storing of textures |
+ | **Classes follow an appropriate inheritance hierarchy.** | See GameTexture and Spritesheet Texture |
+ | **Overloaded functions allow the same function to operate on different parameters.** | Enemy.h line 17 and 18 display this |
+ | **The project uses destructors appropriately.** | Destructors are used in GameTexture, Player and Enemy classes |
+ | **The project uses move semantics to move data, instead of copying it, where possible.** | renderer.cpp moves ownership of the GameTexture pointers to the Player in lines 69-79 |
 
 ## CC Attribution-ShareAlike 4.0 International
 
