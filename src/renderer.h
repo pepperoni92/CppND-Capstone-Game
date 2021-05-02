@@ -34,7 +34,6 @@ class Renderer {
 
   double _lastFrameTime;
 
-  SDL_Texture* loadTexture(std::string path);
   double UpdateLastFrameTime();
 };
 
