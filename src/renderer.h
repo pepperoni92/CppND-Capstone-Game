@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 
+class Enemy;
 class Player;
 class GameTexture;
 class SpritesheetTexture;
@@ -17,7 +18,7 @@ class Renderer {
 
   void LoadTextures(Player* player);
 
-  void Render(Player* const player);
+  void Render(Player* const player, std::vector<Enemy*> const enemies);
   void UpdateWindowTitle(int score, int fps);
 
  private:

@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <string>
+#include "SDL.h"
 
 class SpritesheetTexture;
 class Weapon;
@@ -21,6 +22,8 @@ public:
     
     float GetX() { return _x; };
     float GetY() { return _y; };
+
+    SDL_Rect GetRect();
 
     void Jump();
 

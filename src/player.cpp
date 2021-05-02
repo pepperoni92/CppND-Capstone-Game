@@ -51,8 +51,6 @@ void Player::Update()
         return;
     }
 
-    std::cout << "Player::Update - Current speed = " << _currentSpeed << "\n";
-
     _currentSpeed = 0.0f;
     
     if (_moveLeft)
@@ -132,4 +130,11 @@ void Player::Update()
         _x = 32;
     }
     //std::cout << "Player x = " << _x << "\n";
+}
+
+SDL_Rect Player::GetRect()
+{
+    int rectWidth = _bAttacking ? 48 : 32;
+    SDL_Rect rect = { 320, (int)_y, rectWidth, 32 };
+    return rect;
 }

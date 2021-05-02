@@ -6,6 +6,7 @@
 #include "spritesheet_texture.h"
 #include "scrolling_texture.h"
 #include "player.h"
+#include "enemy.h"
 
 Renderer::Renderer(const std::size_t screen_width, const std::size_t screen_height) : kScreenWidth(screen_width), kScreenHeight(screen_height) {
   // Initialize SDL
@@ -87,7 +88,7 @@ double Renderer::UpdateLastFrameTime()
   return deltaTime;
 }
 
-void Renderer::Render(Player* const player) {
+void Renderer::Render(Player* const player, std::vector<Enemy*> const enemies) {
   double deltaTime = UpdateLastFrameTime();
 
   // Clear screen
@@ -115,6 +116,17 @@ void Renderer::Render(Player* const player) {
 
     // Render weapon
     player->GetWeaponSpritesheet()->Render(320, player->GetY(), _sdlRenderer, deltaTime);
+  }
+
+  // render enemies
+  for (Enemy* enemy : enemies)
+  { 
+    int enemyX = enemy->GetX() - player->GetX();
+    int enemyY = enemy->GetY();
+
+    SDL_Rect enemyRect = { enemyX, enemyY, 16, 16 };
+    SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderFillRect(_sdlRenderer, &enemyRect);
   }
 
   // // Render food

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "SDL.h"
 #include "player.h"
+#include "enemy.h"
 
 Game::Game() : _engine(_dev()){
   _player = new Player();
@@ -28,7 +29,7 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
     Update();
 
     // RENDER
-    renderer.Render(_player);
+    renderer.Render(_player, _enemies);
 
     frame_end = SDL_GetTicks();
 
@@ -59,6 +60,96 @@ void Game::Update() {
   if (!_player->IsAlive()) return;
 
   _player->Update();
+  int playerX = _player->GetX();
+
+  // spawn an enemy every 100 units
+  if (playerX % 100 == 0)
+  {
+    SpawnEnemy(playerX + 640, _player->GetY());
+  }
+
+  std::vector<int> enemiesToKill;
+  int iterator = 0;
+
+  // check for collision with enemies
+  for (Enemy* enemy : _enemies)
+  {
+    int enemyX = enemy->GetX() - _player->GetX();
+    int enemyY = enemy->GetY();
+
+    SDL_Rect enemyRect = { enemyX, enemyY, 16, 16 };
+    if (CheckCollision(enemyRect, _player->GetRect()))
+    {
+      // player is colliding with enemy, check if they are attacking
+      if (_player->GetIsAttacking())
+      {
+        enemy->IsAlive(false);
+        enemiesToKill.push_back(iterator);
+      }
+      // else the player dies here
+    }
+
+    iterator++;
+  }
+
+  for (int i : enemiesToKill)
+  {
+    _enemies.erase(_enemies.begin() + i);
+  }
+}
+
+
+void Game::SpawnEnemy(float x, float y)
+{
+  bool bEmptyPosition = true;
+
+  // check existing enemies to make sure one is not in this x position
+  for (Enemy* enemy : _enemies)
+  {
+    if (x == enemy->GetX())
+    {
+      bEmptyPosition = false;
+      break;
+    }
+  }
+
+  if (bEmptyPosition)
+  {
+    Enemy* enemy = new Enemy(x, y + 16);
+    _enemies.push_back(std::move(enemy));
+  }
+}
+
+bool Game::CheckCollision(SDL_Rect a, SDL_Rect b)
+{
+    //The sides of the rectangles
+    int leftA, leftB;
+    int rightA, rightB;
+    int topA, topB;
+    int bottomA, bottomB;
+
+    //Calculate the sides of rect A
+    leftA = a.x;
+    rightA = a.x + a.w;
+    topA = a.y;
+    bottomA = a.y + a.h;
+
+    //Calculate the sides of rect B
+    leftB = b.x;
+    rightB = b.x + b.w;
+    topB = b.y;
+    bottomB = b.y + b.h;
+
+    if( bottomA <= topB ) return false;
+
+    if( topA >= bottomB ) return false;
+
+    if( rightA <= leftB ) return false;
+
+    if( leftA >= rightB ) return false;
+
+    // No sides from A are outside B
+    return true;
 }
 
 int Game::GetScore() const { return _score; }
