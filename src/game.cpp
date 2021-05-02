@@ -86,7 +86,10 @@ void Game::Update() {
         enemy->IsAlive(false);
         enemiesToKill.push_back(iterator);
       }
-      // else the player dies here
+      else // else the player dies here
+      {
+        _player->Damage();
+      }
     }
 
     iterator++;

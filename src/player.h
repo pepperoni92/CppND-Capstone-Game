@@ -42,7 +42,8 @@ public:
     SpritesheetTexture* GetAttackSpritesheet() { return _attackSpritesheet; }
     void SetAttackpriteheet(SpritesheetTexture* spritesheet) { _attackSpritesheet = spritesheet; }
 
-    bool IsAlive() { return true; }
+    bool IsAlive() { return _bAlive; }
+    void Damage();
 
     bool _moveLeft {false};
     bool _moveRight {false};
@@ -60,7 +61,7 @@ private:
     float _x {320.0f};
     float _y {264.0f};
 
-    int _maxHealth {100};
+    int _maxHealth {1};
     int _currentHealth {_maxHealth};
 
     float _jumpStartY {0.0f};

@@ -51,6 +51,8 @@ void Player::Update()
         return;
     }
 
+    if (!_bAlive) return;
+
     _currentSpeed = 0.0f;
     
     if (_moveLeft)
@@ -137,4 +139,24 @@ SDL_Rect Player::GetRect()
     int rectWidth = _bAttacking ? 48 : 32;
     SDL_Rect rect = { 320, (int)_y, rectWidth, 32 };
     return rect;
+}
+
+void Player::Damage()
+{
+    _currentHealth--;
+
+    if(_currentHealth <= 0)
+    {
+        _spritesheet->StopAnimation();
+        _spritesheet->SetFrameIndex(9);
+        _weaponSpritesheet->StopAnimation();
+        _weaponSpritesheet->SetFrameIndex(9);
+        _bAlive = false;
+
+        if (_bAttacking)
+        {
+            _bAttacking = false;
+            _attackSpritesheet->StopAnimation();
+        }
+    }
 }
