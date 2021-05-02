@@ -64,6 +64,12 @@ Move forward in the level destroying as many enemies as you can without getting 
  | **The project uses destructors appropriately.** | Destructors are used in GameTexture, Player and Enemy classes |
  | **The project uses move semantics to move data, instead of copying it, where possible.** | renderer.cpp moves ownership of the GameTexture pointers to the Player in lines 69-79 |
 
+## Resources and References
+* Background and foreground art from [Kenney Game Assets 2](https://kenney.itch.io/kenney-game-assets-2)
+* Character sprites and animation from [Hitboxes and Hurtboxes](https://ratcasket.itch.io/hitboxes-and-hurtboxes)
+* Utilized tutorials from [Lazy Foo Beginning Game Programming 2.0](https://lazyfoo.net/tutorials/SDL/index.php)
+
+
 ## CC Attribution-ShareAlike 4.0 International
 
 Shield: [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
