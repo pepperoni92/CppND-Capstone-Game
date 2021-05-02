@@ -12,7 +12,7 @@ int main() {
   Renderer renderer(kScreenWidth, kScreenHeight);
   Controller controller;
   Game game;
-  game.Run(controller, renderer, kMsPerFrame);
+  game.Run(controller, renderer, kMsPerFrame, kScreenWidth, kScreenHeight);
   std::cout << "Game has terminated successfully!\n";
   std::cout << "Score: " << game.GetScore() << "\n";
   std::cout << "High Score: " << game.GetHighScore() << "\n";

@@ -4,7 +4,7 @@
 #include "player.h"
 #include "enemy.h"
 
-Game::Game() : _engine(_dev()){
+Game::Game() : _engine(_dev()), _randomEnemyPlacement(0, 1) {
   _player = new Player();
 }
 
@@ -14,7 +14,10 @@ void Game::ResetGame() {
   _score = 0;
 }
 
-void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration) {
+void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration, int screenWidth, int screenHeight) {
+
+  _screenWidth = screenWidth;
+  _screenHeight = screenHeight;
 
   renderer.LoadTextures(_player);
 
@@ -69,9 +72,9 @@ void Game::Update() {
   int playerX = _player->GetX();
 
   // spawn an enemy every 100 units
-  if (playerX % 100 == 0)
+  if (playerX % 100 == 0 && _randomEnemyPlacement(_engine) == 1)
   {
-    SpawnEnemy(playerX + 640, _player->GetY());
+    SpawnEnemy(playerX + _screenWidth, 264);
   }
 
   std::vector<int> enemiesToKill;
@@ -83,7 +86,7 @@ void Game::Update() {
     int enemyX = enemy->GetX() - _player->GetX();
     int enemyY = enemy->GetY();
 
-    SDL_Rect enemyRect = { enemyX, enemyY, 16, 16 };
+    SDL_Rect enemyRect = { enemyX, enemyY, enemy->GetWidth(), enemy->GetHeight() };
     if (CheckCollision(enemyRect, _player->GetRect()))
     {
       // player is colliding with enemy, check if they are attacking
@@ -128,7 +131,7 @@ void Game::SpawnEnemy(float x, float y)
 
   if (bEmptyPosition)
   {
-    Enemy* enemy = new Enemy(x, y + 16);
+    Enemy* enemy = new Enemy(x, y + _randomEnemyPlacement(_engine) * Enemy::ENEMY_SIZE, Enemy::ENEMY_SIZE, Enemy::ENEMY_SIZE);
     _enemies.push_back(std::move(enemy));
   }
 }

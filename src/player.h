@@ -57,6 +57,8 @@ public:
     const int kRunFrameStart {1};
     const int kRunFrameEnd {5};
 
+    static const int PLAYER_SIZE {32};
+
 private:
     float _currentSpeed {0.0f};
     float _speed {5.0f};

@@ -67,15 +67,15 @@ void Renderer::LoadTextures(Player* player)
   _foreground->CreateFromFile("../assets/sprites/sprGround_Full.png", _sdlRenderer);
 
   SpritesheetTexture* playerSpritesheet = new SpritesheetTexture();
-  playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, 32, 32);
+  playerSpritesheet->CreateFromFile(player->kTexturePath, _sdlRenderer, Player::PLAYER_SIZE, Player::PLAYER_SIZE);
   player->SetSpriteheet(std::move(playerSpritesheet));
 
   SpritesheetTexture* weaponSpritesheet = new SpritesheetTexture();
-  weaponSpritesheet->CreateFromFile(player->kWeaponTexturePath, _sdlRenderer, 32, 32);
+  weaponSpritesheet->CreateFromFile(player->kWeaponTexturePath, _sdlRenderer, Player::PLAYER_SIZE, Player::PLAYER_SIZE);
   player->SetWeaponSpriteheet(std::move(weaponSpritesheet));
 
   SpritesheetTexture* attackSpritesheet = new SpritesheetTexture();
-  attackSpritesheet->CreateFromFile(player->kAttackTexturePath, _sdlRenderer, 64, 32);
+  attackSpritesheet->CreateFromFile(player->kAttackTexturePath, _sdlRenderer, Player::PLAYER_SIZE * 2, Player::PLAYER_SIZE);
   player->SetAttackpriteheet(std::move(attackSpritesheet));
 }
 
@@ -124,7 +124,7 @@ void Renderer::Render(Player* const player, std::vector<Enemy*> const enemies) {
     int enemyX = enemy->GetX() - player->GetX();
     int enemyY = enemy->GetY();
 
-    SDL_Rect enemyRect = { enemyX, enemyY, 16, 16 };
+    SDL_Rect enemyRect = { enemyX, enemyY, enemy->GetWidth(), enemy->GetHeight() };
     SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0x00, 0x00, 0xFF);
     SDL_RenderFillRect(_sdlRenderer, &enemyRect);
   }
@@ -134,6 +134,6 @@ void Renderer::Render(Player* const player, std::vector<Enemy*> const enemies) {
 }
 
 void Renderer::UpdateWindowTitle(int score, int highScore, int fps) {
-  std::string title{"Score: " + std::to_string(score) + "High Score: " + std::to_string(highScore) + " FPS: " + std::to_string(fps)};
+  std::string title{"Score: " + std::to_string(score) + " | High Score: " + std::to_string(highScore) + " | FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(_sdlWindow, title.c_str());
 }
