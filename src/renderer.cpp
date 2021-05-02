@@ -125,7 +125,7 @@ void Renderer::Render(Player* const player, std::vector<Enemy*> const enemies) {
     int enemyY = enemy->GetY();
 
     SDL_Rect enemyRect = { enemyX, enemyY, 16, 16 };
-    SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_SetRenderDrawColor(_sdlRenderer, 0xFF, 0x00, 0x00, 0xFF);
     SDL_RenderFillRect(_sdlRenderer, &enemyRect);
   }
 
