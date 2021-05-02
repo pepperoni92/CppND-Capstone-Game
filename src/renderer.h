@@ -19,7 +19,7 @@ class Renderer {
   void LoadTextures(Player* player);
 
   void Render(Player* const player, std::vector<Enemy*> const enemies);
-  void UpdateWindowTitle(int score, int fps);
+  void UpdateWindowTitle(int score, int highScore, int fps);
 
  private:
 

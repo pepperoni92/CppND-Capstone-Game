@@ -16,6 +16,7 @@ public:
   Game();
   void Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration);
   int GetScore() const;
+  int GetHighScore() const;
 
 private:
   Player* _player;
@@ -27,11 +28,14 @@ private:
   std::uniform_int_distribution<int> _randomH;
 
   int _score{0};
+  int _highScore{0};
 
   void Update();
   void SpawnEnemy(float x, float y);
 
   bool CheckCollision(SDL_Rect a, SDL_Rect b);
+
+  void ResetGame();
 };
 
 #endif

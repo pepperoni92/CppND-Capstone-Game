@@ -45,6 +45,8 @@ public:
     bool IsAlive() { return _bAlive; }
     void Damage();
 
+    void ResetPlayer();
+
     bool _moveLeft {false};
     bool _moveRight {false};
 

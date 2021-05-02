@@ -133,7 +133,7 @@ void Renderer::Render(Player* const player, std::vector<Enemy*> const enemies) {
   SDL_RenderPresent(_sdlRenderer);
 }
 
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  std::string title{"Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
+void Renderer::UpdateWindowTitle(int score, int highScore, int fps) {
+  std::string title{"Score: " + std::to_string(score) + "High Score: " + std::to_string(highScore) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(_sdlWindow, title.c_str());
 }

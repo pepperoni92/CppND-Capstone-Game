@@ -160,3 +160,14 @@ void Player::Damage()
         }
     }
 }
+
+void Player::ResetPlayer()
+{
+    _x = 320.0f;
+    _y = 264.0f;
+    _currentHealth = _maxHealth;
+    _currentSpeed = 0.0f;
+    _spritesheet->SetFrameIndex(0);
+    _weaponSpritesheet->SetFrameIndex(0);
+    _bAlive = true;
+}

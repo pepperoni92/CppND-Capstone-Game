@@ -8,6 +8,12 @@ Game::Game() : _engine(_dev()){
   _player = new Player();
 }
 
+void Game::ResetGame() {
+  _enemies.clear();
+  _player->ResetPlayer();
+  _score = 0;
+}
+
 void Game::Run(Controller const &controller, Renderer &renderer, std::size_t target_frame_duration) {
 
   renderer.LoadTextures(_player);
@@ -40,7 +46,7 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
 
     // After every second, update the window title.
     if (frame_end - title_timestamp >= 1000) {
-      renderer.UpdateWindowTitle(_score, frame_count);
+      renderer.UpdateWindowTitle(_score, _highScore, frame_count);
       frame_count = 0;
       title_timestamp = frame_end;
     }
@@ -85,10 +91,14 @@ void Game::Update() {
       {
         enemy->IsAlive(false);
         enemiesToKill.push_back(iterator);
+
+        _score++;
+        if (_score >= _highScore) _highScore = _score; 
       }
       else // else the player dies here
       {
         _player->Damage();
+        ResetGame();
       }
     }
 
@@ -156,3 +166,4 @@ bool Game::CheckCollision(SDL_Rect a, SDL_Rect b)
 }
 
 int Game::GetScore() const { return _score; }
+int Game::GetHighScore() const { return _highScore; }
