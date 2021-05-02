@@ -27,7 +27,7 @@ Move forward in the level destroying as many enemies as you can without getting 
 * SDL2 >= 2.0 
   * All installation instructions can be found [here](https://wiki.libsdl.org/Installation)
   >Note that for Linux, an `apt` or `apt-get` installation is preferred to building from source. 
-* SDL_image
+* SDL_image >= 2.0
   * `apt-get install libsdl2-image-dev`
 * gcc/g++ >= 5.4
   * Linux: gcc / g++ is installed by default on most Linux distros
